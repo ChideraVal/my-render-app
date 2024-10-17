@@ -1,2 +1,3 @@
 appenv/
 staticfiles/
+.env/
