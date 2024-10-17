@@ -8,11 +8,6 @@ load_dotenv()
 
 secret_key = os.getenv('RAVE_SECRET_KEY')
 
-
-# rave = Rave(
-#     "FLWPUBK_TEST-6d7587e27224663529f0fd2a784f7561-X",
-#     "FLWSECK_TEST-fbdc145d6d73ec3ad610e772d7524aa5-X", usingEnv = False)
-
 rave = Rave(os.getenv("FLW_PUBLIC_KEY"),
             os.getenv("SECRET_KEY"),
             # os.getenv("FLW_ENCRYPTION_KEY"),
