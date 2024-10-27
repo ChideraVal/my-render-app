@@ -6,12 +6,12 @@ import os
 
 load_dotenv()
 
-secret_key = os.getenv('RAVE_SECRET_KEY')
+# secret_key = os.getenv('RAVE_SECRET_KEY')
 
 rave = Rave(os.getenv("FLW_PUBLIC_KEY"),
             os.getenv("SECRET_KEY"),
             # os.getenv("FLW_ENCRYPTION_KEY"),
-            production=True)
+            usingEnv=False)
 
 # Payload with pin
 payload = {
@@ -21,7 +21,7 @@ payload = {
   "expiryyear": "26",
   "currency": "NGN",
   "amount": "50",
-  "email": "fluxlite224@gmail.com",
+  "email": "pyjamel224@gmail.com",
   "phonenumber": "07016793402",
   "firstname": "Joy",
   "lastname": "Ngozi",
@@ -41,7 +41,7 @@ def pay(request):
 
 
             if arg == "pin":
-                Misc.updatePayload(res["suggestedAuth"], payload, pin="3310")
+                Misc.updatePayload(res["suggestedAuth"], payload, pin="1010")
             if arg == "address":
                 Misc.updatePayload(res["suggestedAuth"], payload, address= {"billingzip": "07205", "billingcity": "Hillside", "billingaddress": "470 Mundet PI", "billingstate": "NJ", "billingcountry": "US"})
             print(f'[NEW PAYLOAD: {payload}]')

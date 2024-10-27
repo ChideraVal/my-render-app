@@ -1,14 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://checkout.flutterwave.com/v3.js"></script>
     <title>Document</title>
-    {% load static %}
 </head>
+
 <body>
-    <h1>This is my render app!</h1>
-    <img src="{% static 'Hands - Earth.png' %}" alt="" width="300" height="300">
-    <a href="/pay/">Pay</a>
+    <button onclick="makePayment()">Pay now</button>
+    <script>
+        function makePayment() {
+            FlutterwaveCheckout({
+                public_key: "FLWPUBK-70e3db3be7927e8fde83a2b605afa933-X",
+                tx_ref: "titanic-839393039022",
+                amount: 5600,
+                currency: "NGN",
+                payment_options: "card, mobilemoneyghana, ussd",
+                redirect_url: "https://glaciers.titanic.com/handle-flutterwave-payment",
+                // meta: {
+                //     consumer_id: 23,
+                //     consumer_mac: "92a3-912ba-1192a",
+                // },
+                customer: {
+                    email: "pyjamel224@gmail.com",
+                    phone_number: "07016793402",
+                    name: "Rose DeWitt Bukater",
+                },
+                customizations: {
+                    title: "Tencis Stores",
+                    description: "Payment for an awesome cruise",
+                    logo: "https://www.logolynx.com/images/logolynx/22/2239ca38f5505fbfce7e55bbc0604386.jpeg",
+                }
+            });
+        }
+    </script>
+
 </body>
+
 </html>
