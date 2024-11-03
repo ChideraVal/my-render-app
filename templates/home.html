@@ -9,28 +9,37 @@
 </head>
 
 <body>
+    <form>
+        <input type="text" name="name" placeholder="name">
+        <input type="email" name="email" placeholder="email">
+    </form>
     <button onclick="makePayment()">Pay now</button>
     <script>
+        let form = document.forms[0]
+        console.log(form)
+        let name = form['name']
+        let email = form['email']
         function makePayment() {
+            console.log(name.value, email.value);
             FlutterwaveCheckout({
-                public_key: "FLWPUBK-70e3db3be7927e8fde83a2b605afa933-X",
-                tx_ref: "titanic-839393039022",
-                amount: 100,
+                public_key: "FLWPUBK-4665a5bfdd9fe8535fa8c74f0d845b09-X",
+                tx_ref: `tx-${new Date().getSeconds()}`,
+                amount: 50,
                 currency: "NGN",
                 payment_options: "card, mobilemoneyghana, ussd",
-                redirect_url: "https://glaciers.titanic.com/handle-flutterwave-payment",
+                redirect_url: "https://my-render-app-w4yy.onrender.com/verify",
                 // meta: {
                 //     consumer_id: 23,
                 //     consumer_mac: "92a3-912ba-1192a",
                 // },
                 customer: {
-                    email: "pyjamel224@gmail.com",
+                    email: email.value,
                     phone_number: "07016793402",
-                    name: "Rose DeWitt Bukater",
+                    name: name.value,
                 },
                 customizations: {
                     title: "Tencis Stores",
-                    description: "Payment for an awesome cruise",
+                    description: "Payment for Tencis Stores",
                     logo: "https://www.logolynx.com/images/logolynx/22/2239ca38f5505fbfce7e55bbc0604386.jpeg",
                 }
             });

@@ -3,15 +3,18 @@ from django.http import HttpResponse
 from rave_python import Rave, RaveExceptions, Misc
 from dotenv import load_dotenv
 import os
+import requests
+from django.shortcuts import render
+# from .models import Order
 
 load_dotenv()
 
-# secret_key = os.getenv('RAVE_SECRET_KEY')
+secret_key = os.getenv('SECRET_KEY')
 
 rave = Rave(os.getenv("FLW_PUBLIC_KEY"),
             os.getenv("SECRET_KEY"),
             # os.getenv("FLW_ENCRYPTION_KEY"),
-            usingEnv=False)
+            production=True)
 
 # Payload with pin
 payload = {
@@ -120,5 +123,42 @@ def verify(request):
         print(e.err["txRef"])
         return HttpResponse(f"VERIFICATION ERROR: {e.err['errMsg']}")
     
+
+
+
+# Good code
 def home(request):
     return render(request, 'home.html')
+
+def check_transaction_status(request, transaction_id):
+    url = f"https://api.flutterwave.com/v3/transactions/{transaction_id}/verify"
+    headers = {
+        "Authorization": f"Bearer {secret_key}"
+    }
+    response = requests.get(url, headers=headers)
+    
+    if response.status_code == 200:
+        return response.json()
+    return None
+
+def activate_order(request):
+    transaction_id = request.GET.get('transaction_id')
+    
+    if not transaction_id:
+        return HttpResponse('Transaction ID missing!')
+
+    transaction_data = check_transaction_status(request, transaction_id)
+    status_message = f"Payment processing for {transaction_id}, please refresh to check."
+
+    if transaction_data:
+        if transaction_data['status'] == 'success' and transaction_data['data']['status'] == 'successful':
+            status_message = f"Payment successful for {transaction_id}! Your order is now active."
+        elif transaction_data['data']['status'] == 'failed':
+            status_message = f"Payment failed for {transaction_id}, please try again."
+        else:
+            status_message = f"Payment processing for {transaction_id}, please refresh to check."
+
+    return render(request, 'order_status.html', {'status_message': status_message})
+
+
+
