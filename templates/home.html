@@ -45,7 +45,7 @@
                 callback: function (payment) {
                     // Send AJAX verification request to backend
                     console.log(payment)
-                    open(`https://my-render-app-w4yy.onrender.com/verify/${payment.id}`, '_parent')
+                    open(`https://my-render-app-w4yy.onrender.com/verify/${payment.transaction_id}`, '_parent')
                 },
             });
         }
