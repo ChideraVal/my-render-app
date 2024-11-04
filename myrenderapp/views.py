@@ -88,10 +88,12 @@ def activate_order(request, txref):
     status_message = f"Payment processing for {transaction_id}, please refresh to check."
 
     if transaction_data:
-        if transaction_data['status'] == 'success' and transaction_data['data']['status'] == 'successful':
+        if str(transaction_data['status']).lower() == 'success' and str(transaction_data['data']['status']).lower() == 'successful':
             status_message = f"Payment successful for {transaction_id}! Your order is now active."
-        elif transaction_data['data']['status'] == 'failed':
+        elif str(transaction_data['data']['status']).lower() == 'failed':
             status_message = f"Payment failed for {transaction_id}, please try again."
+        elif str(transaction_data['data']['status']).lower() == 'cancelled':
+            status_message = f"Payment cancelled for {transaction_id}, please try again."
         else:
             status_message = f"Payment processing for {transaction_id}, please refresh to check."
 
