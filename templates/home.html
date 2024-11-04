@@ -27,7 +27,7 @@
                 amount: 50,
                 currency: "NGN",
                 payment_options: "card, mobilemoneyghana, ussd",
-                redirect_url: "https://my-render-app-w4yy.onrender.com/verify",
+                // redirect_url: "https://my-render-app-w4yy.onrender.com/verify",
                 // meta: {
                 //     consumer_id: 23,
                 //     consumer_mac: "92a3-912ba-1192a",
@@ -41,6 +41,11 @@
                     title: "Tencis Stores",
                     description: "Payment for Tencis Stores",
                     logo: "https://www.logolynx.com/images/logolynx/22/2239ca38f5505fbfce7e55bbc0604386.jpeg",
+                },
+                callback: function (payment) {
+                    // Send AJAX verification request to backend
+                    console.log(payment)
+                    open(`https://my-render-app-w4yy.onrender.com/verify/${payment.id}`, '_parent')
                 },
             });
         }
