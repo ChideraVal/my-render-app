@@ -77,9 +77,9 @@ def check_transaction_status(request, transaction_id):
         return response.json()
     return None
 
-def activate_order(request):
+def activate_order(request, txref):
     # print(request.GET['response'][0][0:20])
-    transaction_id = 'tx-28'
+    transaction_id = str(txref)
     
     if not transaction_id:
         return HttpResponse('Transaction ID missing!')
